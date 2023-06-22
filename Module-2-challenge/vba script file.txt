@@ -1,0 +1,54 @@
+Sub ok()
+  Dim ticker As String
+    Dim vol As Double
+    vol = 0
+    
+    Dim Summary_Table_Row As Integer
+    Dim year_open As Double
+    year_open = 0
+    Dim year_close As Double
+    year_close = 0
+
+    Cells(1, 9).Value = "ticker"
+    Cells(1, 10).Value = "Yearly_change"
+    Cells(1, 12).Value = "Total Stock Vol"
+    Cells(1, 11).Value = "Yearly_percentage"
+
+    Summary_Table_Row = 2
+
+    For i = 2 To 75301
+
+    If year_open = 0 Then
+    year_open = Cells(i, 3).Value
+    End If
+
+    If Cells(i + 1, 1).Value <> Cells(i, 1).Value Then
+    ticker = Cells(i, 1).Value
+    year_close = Cells(i, 6).Value
+    yearly_change = year_close - year_open
+    year_Percent = (Cells(i, 6).Value - year_open) / year_open
+    ticker = Cells(i, 1).Value
+    vol = vol + Cells(i, 7).Value
+    
+    If (yearly_change > 0) Then
+    Range("J" & Summary_Table_Row).Interior.ColorIndex = 4
+    ElseIf (yearly_change <= 0) Then
+    Range("J" & Summary_Table_Row).Interior.ColorIndex = 3
+    End If
+    Range("j" & Summary_Table_Row).Value = yearly_change
+    Range("I" & Summary_Table_Row).Value = ticker
+    Range("K" & Summary_Table_Row).Value = year_Percent
+    Range("L" & Summary_Table_Row).Value = vol
+    Summary_Table_Row = Summary_Table_Row + 1
+    vol = 0
+    Else
+    vol = vol + Cells(i, 7).Value
+
+
+    End If
+
+            
+
+    Next i
+
+End Sub
